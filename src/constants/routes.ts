@@ -4,10 +4,10 @@ export const ROUTES = {
     TITLE: 'Auth',
     PATH: '/auth',
   },
-  PAYMENT: {
-    KEY: 'payment-route',
-    TITLE: 'Payments',
-    PATH: 'payments',
+  ORDER: {
+    KEY: 'order-route',
+    TITLE: 'Orders',
+    PATH: 'orders',
   },
   PRODUCT: {
     KEY: 'product-route',

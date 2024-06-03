@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 
 import { ROUTES } from 'constants/routes'
 import Auth from 'pages/Auth'
-import Payment from 'pages/Payment'
+import Orders from 'pages/Orders'
 import Products from 'pages/Products'
 
 import './App.scss'
@@ -15,7 +15,7 @@ function App() {
         <Routes>
           <Route path={ROUTES.AUTH.PATH} element={<Auth />}></Route>
 
-          <Route path={ROUTES.PAYMENT.PATH} element={<Payment />}></Route>
+          <Route path={ROUTES.ORDER.PATH} element={<Orders />}></Route>
 
           <Route path={ROUTES.PRODUCT.PATH} element={<Products />}></Route>
 
