@@ -1,5 +1,11 @@
+import AuthComponent from 'components/AuthComponent'
+
 const Auth = () => {
-  return <></>
+  return (
+    <>
+      <AuthComponent />
+    </>
+  )
 }
 
 export default Auth

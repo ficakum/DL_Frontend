@@ -6,8 +6,6 @@ import Auth from 'pages/Auth'
 import Orders from 'pages/Orders'
 import Products from 'pages/Products'
 
-import './App.scss'
-
 function App() {
   return (
     <div className='App'>
