@@ -42,6 +42,7 @@ export const initialUser = {
 }
 
 export interface Product {
+  id: string
   type: string
   imageURL: string
   code: string
@@ -50,6 +51,7 @@ export interface Product {
 }
 
 export const initialProduct = {
+  id: '',
   type: '',
   imageURL: '',
   code: '',
@@ -58,6 +60,7 @@ export const initialProduct = {
 }
 
 export interface Order {
+  id: string
   products: string[]
   status: string
   owner: string
@@ -65,6 +68,7 @@ export interface Order {
 }
 
 export const initialOrder = {
+  id: '',
   products: [],
   status: '',
   owner: '',
@@ -73,4 +77,11 @@ export const initialOrder = {
 
 export interface IProps {
   children: ReactNode
+}
+
+export interface ItemsPage<T> {
+  items: T[]
+  currentPage: number
+  totalPages: number
+  totalCount: number
 }

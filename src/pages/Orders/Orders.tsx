@@ -1,5 +1,11 @@
+import OrdersComponent from 'components/OrdersComponent'
+
 const Orders = () => {
-  return <></>
+  return (
+    <>
+      <OrdersComponent />
+    </>
+  )
 }
 
 export default Orders

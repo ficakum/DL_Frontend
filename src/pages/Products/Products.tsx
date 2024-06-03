@@ -1,5 +1,11 @@
+import ProductsComponent from 'components/ProductsComponent'
+
 const Products = () => {
-  return <></>
+  return (
+    <>
+      <ProductsComponent />
+    </>
+  )
 }
 
 export default Products

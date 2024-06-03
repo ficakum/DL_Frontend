@@ -1,11 +1,12 @@
 import { Api } from 'api'
+import { AxiosResponse } from 'axios'
 import {
   CREATE_PRODUCTS_URL,
   DELETE_PRODUCTS_URL,
   GET_PRODUCTS_URL,
   UPDATE_PRODUCTS_URL,
 } from 'constants/product'
-import { Product } from 'models'
+import { ItemsPage, Product } from 'models'
 
 const apiUrl = process.env.REACT_APP_API_URL
 
@@ -15,12 +16,13 @@ const createProductRecommendationUrl = `${apiUrl}${CREATE_PRODUCTS_URL}`
 const updateProductRecommendationUrl = `${apiUrl}${UPDATE_PRODUCTS_URL}`
 const deleteProductRecommendationUrl = `${apiUrl}${DELETE_PRODUCTS_URL}`
 
-export const getProduct = async (id: string) => {
-  const response = await Api.get(`${getProductRecommendationUrl}${id}`)
-  return response.data
+export const getProduct = (id: string) => {
+  return Api.get(`${getProductRecommendationUrl}${id}`).then(
+    (response: AxiosResponse<Product>) => response.data,
+  )
 }
 
-export const getProducts = async (page?: number, limit?: number, type?: string) => {
+export const getProducts = (page?: number, limit?: number, type?: string) => {
   let typeQuery
   let pageQuery
   let limitQuery
@@ -28,24 +30,23 @@ export const getProducts = async (page?: number, limit?: number, type?: string) 
   page ? (pageQuery = `?$page=${page}`) : (pageQuery = '?page=1')
   limit ? (limitQuery = `&$limit=${limit}`) : (limitQuery = '&limit=0')
 
-  const response = await Api.get(
-    `${getProductsRecommendationUrl}${pageQuery}${limitQuery}${typeQuery}`,
+  return Api.get(`${getProductsRecommendationUrl}${pageQuery}${limitQuery}${typeQuery}`).then(
+    (response: AxiosResponse<ItemsPage<Product>>) => response.data,
   )
-
-  return response.data
 }
 
-export const createProduct = async (product: Partial<Product>) => {
-  const response = await Api.post(`${createProductRecommendationUrl}`, product)
-  return response.data
+export const createProduct = (product: Partial<Product>) => {
+  return Api.post(`${createProductRecommendationUrl}`, product).then(
+    (response: AxiosResponse<Product>) => response.data,
+  )
 }
 
-export const updateProduct = async (product: Partial<Product>, id: string) => {
-  const response = await Api.patch(`${updateProductRecommendationUrl}${id}`, product)
-  return response.data
+export const updateProduct = (product: Partial<Product>, id: string) => {
+  return Api.patch(`${updateProductRecommendationUrl}${id}`, product).then(
+    (response: AxiosResponse<Product>) => response.data,
+  )
 }
 
 export const deleteProduct = async (id: string) => {
-  const response = await Api.delete(`${deleteProductRecommendationUrl}${id}`)
-  return response.data
+  Api.delete(`${deleteProductRecommendationUrl}${id}`)
 }
