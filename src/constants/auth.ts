@@ -11,4 +11,9 @@ export const INVALID_REFRESH_TOKEN_DESCRIPTION = 'Invalid refresh token (expired
 
 export const REDIRECT_LOGOUT_KEY = `${APP_PREFIX}redirectLogout`
 
-export const GET_USERS_API_URL = 'api/v1/FUTSAL/users'
+export const GET_USERS_API_URL = 'v1/users/logged-user'
+export const SIGN_IN_API_URL = 'v1/authentication/signin'
+export const SIGN_UP_API_URL = 'v1/authentication/signup'
+export const RESET_PASSWORD_API_URL = 'v1/authentication/reset-password'
+export const REFRESH_TOKEN_API_URL = 'v1/authentication/refresh-token'
+export const GET_LOGGED_USER_API_URL = 'v1/authentication/logged-user'

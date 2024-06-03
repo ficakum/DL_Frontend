@@ -6,12 +6,13 @@ import {
   REFRESH_TOKEN_KEY,
   HEADERS_CONTENT_TYPE_FORM_URLENCODED,
   GET_USERS_API_URL,
+  REFRESH_TOKEN_API_URL,
 } from 'constants/auth'
 import { Api } from 'api'
 import { IAuthUser, IUser } from 'models'
 
 const apiUrl = process.env.REACT_APP_API_URL
-const refreshUserAccessTokenUrl = `${apiUrl}oauth/token`
+const refreshUserAccessTokenUrl = `${apiUrl}${REFRESH_TOKEN_API_URL}`
 
 const headersContentTypeFormUrlencoded = HEADERS_CONTENT_TYPE_FORM_URLENCODED
 

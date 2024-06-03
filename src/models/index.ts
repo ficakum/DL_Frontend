@@ -1,5 +1,13 @@
 import { ReactNode, createContext } from 'react'
 
+export enum Roles {
+  ADMIN = 'admin',
+  CUSTOMER = 'customer',
+  VENDOR = 'vendor',
+}
+
+export type Role = 'admin' | 'customer' | 'vendor'
+
 export const GlobalContext = createContext<GlobalContextType | null>(null)
 
 export interface IAuthUser {
@@ -21,20 +29,46 @@ export type GlobalContextType = {
 
 export interface IUser {
   email: string
-  firstName: string
+  userName: string
   id: string
-  lastName: string
-  phoneNumber: string
-  photoUrl: string
+  userType: Role
 }
 
 export const initialUser = {
   email: '',
-  firstName: '',
+  userName: '',
   id: '',
-  lastName: '',
-  phoneNumber: '',
-  photoUrl: '',
+  userType: Roles.CUSTOMER,
+}
+
+export interface Product {
+  type: string
+  imageURL: string
+  code: string
+  price: number
+  currency: string
+}
+
+export const initialProduct = {
+  type: '',
+  imageURL: '',
+  code: '',
+  price: 0,
+  currency: '',
+}
+
+export interface Order {
+  products: string[]
+  status: string
+  owner: string
+  orderPrice: number
+}
+
+export const initialOrder = {
+  products: [],
+  status: '',
+  owner: '',
+  orderPrice: 0,
 }
 
 export interface IProps {

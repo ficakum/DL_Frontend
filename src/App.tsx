@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 
 import { ROUTES } from 'constants/routes'
 import Auth from 'pages/Auth'
+import Payment from 'pages/Payment'
+import Products from 'pages/Products'
 
 import './App.scss'
 
@@ -12,6 +14,10 @@ function App() {
       <Router>
         <Routes>
           <Route path={ROUTES.AUTH.PATH} element={<Auth />}></Route>
+
+          <Route path={ROUTES.PAYMENT.PATH} element={<Payment />}></Route>
+
+          <Route path={ROUTES.PRODUCT.PATH} element={<Products />}></Route>
 
           {/* wild route*/}
           <Route path='*' element={<Navigate to={ROUTES.AUTH.PATH} replace />} />

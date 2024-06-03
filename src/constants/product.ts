@@ -1,0 +1,5 @@
+export const GET_PRODUCT_URL = 'v1/products/'
+export const GET_PRODUCTS_URL = 'v1/products/'
+export const CREATE_PRODUCTS_URL = 'v1/products/'
+export const UPDATE_PRODUCTS_URL = 'v1/products/'
+export const DELETE_PRODUCTS_URL = 'v1/products/'
