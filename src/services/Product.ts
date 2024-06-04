@@ -10,43 +10,52 @@ import { ItemsPage, Product } from 'models'
 
 const apiUrl = process.env.REACT_APP_API_URL
 
-const getProductRecommendationUrl = `${apiUrl}${GET_PRODUCTS_URL}`
-const getProductsRecommendationUrl = `${apiUrl}${GET_PRODUCTS_URL}`
-const createProductRecommendationUrl = `${apiUrl}${CREATE_PRODUCTS_URL}`
-const updateProductRecommendationUrl = `${apiUrl}${UPDATE_PRODUCTS_URL}`
-const deleteProductRecommendationUrl = `${apiUrl}${DELETE_PRODUCTS_URL}`
+const getProductUrl = `${apiUrl}${GET_PRODUCTS_URL}`
+const getProductsUrl = `${apiUrl}${GET_PRODUCTS_URL}`
+const createProductUrl = `${apiUrl}${CREATE_PRODUCTS_URL}`
+const updateProductUrl = `${apiUrl}${UPDATE_PRODUCTS_URL}`
+const deleteProductUrl = `${apiUrl}${DELETE_PRODUCTS_URL}`
+const getSimilarImageProductsUrl = `${apiUrl}${GET_PRODUCTS_URL}`
 
 export const getProduct = (id: string) => {
-  return Api.get(`${getProductRecommendationUrl}${id}`).then(
-    (response: AxiosResponse<Product>) => response.data,
-  )
+  return Api.get(`${getProductUrl}${id}`).then((response: AxiosResponse<Product>) => response.data)
 }
 
-export const getProducts = (page?: number, limit?: number, type?: string) => {
+export const getProducts = (page?: number, limit?: number, name?: string, type?: string) => {
   let typeQuery
+  let nameQuery
   let pageQuery
   let limitQuery
   type ? (typeQuery = `&type=${type}`) : (typeQuery = '')
+  name ? (nameQuery = `&name=${name}`) : (nameQuery = '')
   page ? (pageQuery = `?$page=${page}`) : (pageQuery = '?page=1')
   limit ? (limitQuery = `&$limit=${limit}`) : (limitQuery = '&limit=0')
 
-  return Api.get(`${getProductsRecommendationUrl}${pageQuery}${limitQuery}${typeQuery}`).then(
+  return Api.get(`${getProductsUrl}${pageQuery}${limitQuery}${typeQuery}${nameQuery}`).then(
     (response: AxiosResponse<ItemsPage<Product>>) => response.data,
   )
 }
 
 export const createProduct = (product: Partial<Product>) => {
-  return Api.post(`${createProductRecommendationUrl}`, product).then(
+  return Api.post(`${createProductUrl}`, product).then(
     (response: AxiosResponse<Product>) => response.data,
   )
 }
 
 export const updateProduct = (product: Partial<Product>, id: string) => {
-  return Api.patch(`${updateProductRecommendationUrl}${id}`, product).then(
+  return Api.patch(`${updateProductUrl}${id}`, product).then(
     (response: AxiosResponse<Product>) => response.data,
   )
 }
 
 export const deleteProduct = async (id: string) => {
-  Api.delete(`${deleteProductRecommendationUrl}${id}`)
+  Api.delete(`${deleteProductUrl}${id}`)
+}
+
+export const getSimilarProductsByImage = (formData: FormData) => {
+  return Api.post(`${getSimilarImageProductsUrl}}`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  }).then((response: AxiosResponse<Product[]>) => response.data)
 }
