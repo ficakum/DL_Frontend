@@ -3,6 +3,7 @@ import { AxiosResponse } from 'axios'
 import {
   CREATE_PRODUCTS_URL,
   DELETE_PRODUCTS_URL,
+  GET_PRODUCTS_BY_IDS_URL,
   GET_PRODUCTS_URL,
   UPDATE_PRODUCTS_URL,
 } from 'constants/product'
@@ -12,6 +13,7 @@ const apiUrl = process.env.REACT_APP_API_URL
 
 const getProductUrl = `${apiUrl}${GET_PRODUCTS_URL}`
 const getProductsUrl = `${apiUrl}${GET_PRODUCTS_URL}`
+const getProductsByIdsUrl = `${apiUrl}${GET_PRODUCTS_BY_IDS_URL}`
 const createProductUrl = `${apiUrl}${CREATE_PRODUCTS_URL}`
 const updateProductUrl = `${apiUrl}${UPDATE_PRODUCTS_URL}`
 const deleteProductUrl = `${apiUrl}${DELETE_PRODUCTS_URL}`
@@ -33,6 +35,12 @@ export const getProducts = (page?: number, limit?: number, name?: string, type?:
 
   return Api.get(`${getProductsUrl}${pageQuery}${limitQuery}${typeQuery}${nameQuery}`).then(
     (response: AxiosResponse<ItemsPage<Product>>) => response.data,
+  )
+}
+
+export const getProductsByIds = (ids: string[]) => {
+  return Api.post(`${getProductsByIdsUrl}`, { ids }).then(
+    (response: AxiosResponse<Product[]>) => response.data,
   )
 }
 

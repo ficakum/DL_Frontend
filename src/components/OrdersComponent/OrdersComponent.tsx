@@ -1,6 +1,6 @@
 import { Pagination } from '@mui/material'
 import Order from 'components/Order/Order'
-import { IUser, Order as OrderModel, initialUser } from 'models'
+import { IUser, Order as OrderModel, Roles, initialUser } from 'models'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { getLoggedInUser } from 'services/Auth'
 import { getOrders } from 'services/Order'
@@ -18,32 +18,50 @@ const OrdersComponent = () => {
 
   useEffect(() => {
     getLoggedInUser().then((user) => setUser(user))
-    getOrders(1, 10).then((response) => {
-      setOrders(response.items)
-      setPage(response.currentPage)
-      setTotalPages(response.totalPages)
-      setTotalCount(response.totalCount)
-    })
+    user.userType === Roles.ADMIN
+      ? getOrders(1, 10).then((response) => {
+          setOrders(response.items)
+          setPage(response.currentPage)
+          setTotalPages(response.totalPages)
+          setTotalCount(response.totalCount)
+        })
+      : getOrders(1, 10, user.id).then((response) => {
+          setOrders(response.items)
+          setPage(response.currentPage)
+          setTotalPages(response.totalPages)
+          setTotalCount(response.totalCount)
+        })
   }, [])
 
   const handlePageChange = (_event: ChangeEvent<unknown>, value: number) => {
-    getOrders(value, 10)
-      .then((response) => {
-        setOrders(response.items)
-        setPage(response.currentPage)
-        setTotalPages(response.totalPages)
-        setTotalCount(response.totalCount)
-      })
-      .catch((error: unknown) => {
-        console.log(error)
-      })
+    user.userType === Roles.ADMIN
+      ? getOrders(value, 10)
+          .then((response) => {
+            setOrders(response.items)
+            setPage(response.currentPage)
+            setTotalPages(response.totalPages)
+            setTotalCount(response.totalCount)
+          })
+          .catch((error: unknown) => {
+            console.log(error)
+          })
+      : getOrders(value, 10, user.id)
+          .then((response) => {
+            setOrders(response.items)
+            setPage(response.currentPage)
+            setTotalPages(response.totalPages)
+            setTotalCount(response.totalCount)
+          })
+          .catch((error: unknown) => {
+            console.log(error)
+          })
   }
 
   return (
     <>
       <div>
         {orders.map((order) => (
-          <Order key={order.id} />
+          <Order key={order.id} order={order} user={user} />
         ))}
       </div>
       <Pagination
