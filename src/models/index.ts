@@ -44,19 +44,19 @@ export const initialUser = {
 export interface Product {
   id: string
   type: string
+  name: string
   imageURL: string
   code: string
   price: number
-  currency: string
 }
 
 export const initialProduct = {
   id: '',
   type: '',
+  name: '',
   imageURL: '',
   code: '',
   price: 0,
-  currency: '',
 }
 
 export interface Order {
