@@ -59,9 +59,14 @@ export const initialProduct = {
   price: 0,
 }
 
+interface OrderedProduct {
+  productId: string
+  numberOfProducts: number
+}
+
 export interface Order {
   id: string
-  products: string[]
+  products: OrderedProduct[]
   status: string
   owner: string
   orderPrice: number

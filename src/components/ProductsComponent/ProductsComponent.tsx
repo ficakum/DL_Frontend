@@ -1,9 +1,10 @@
-import { Pagination } from '@mui/material'
+import { Button, Pagination } from '@mui/material'
 import Product from 'components/Product/Product'
 import { Status } from 'constants/order'
 import { IUser, Order, Product as ProductModel, initialOrder, initialUser } from 'models'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { getLoggedInUser } from 'services/Auth'
+import { createOrder } from 'services/Order'
 import { getProducts } from 'services/Product'
 
 const ProductsComponent = () => {
@@ -28,18 +29,31 @@ const ProductsComponent = () => {
     })
   }, [])
 
-  const handleProductOrder = (product: ProductModel) => {
+  const handleProductOrder = (product: ProductModel, value: number) => {
     const updatedOrder: Order = {
       id: '',
       owner: user.id,
       status: Status.UNPAID,
-      orderPrice: order.orderPrice + product.price,
+      orderPrice: order.orderPrice + product.price * value,
       products: order.products,
     }
 
-    updatedOrder.products.push(product.id)
+    updatedOrder.products.push({ productId: product.id, numberOfProducts: value })
 
     setOrder(updatedOrder)
+  }
+
+  const handleOrder = () => {
+    createOrder({
+      orderPrice: order.orderPrice,
+      owner: order.owner,
+      products: order.products,
+      status: order.status,
+    })
+      .then(() => {
+        setOrder(initialOrder)
+      })
+      .catch((err) => console.log(err))
   }
 
   const handlePageChange = (_event: ChangeEvent<unknown>, value: number) => {
@@ -67,6 +81,7 @@ const ProductsComponent = () => {
         color='primary'
         size='large'
       />
+      <Button onClick={handleOrder}>Make an order</Button>
     </>
   )
 }
