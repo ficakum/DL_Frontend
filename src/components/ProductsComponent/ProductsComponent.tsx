@@ -1,4 +1,5 @@
 import { Button, Pagination } from '@mui/material'
+import CreateOrder from 'components/CreateOrder'
 import Product from 'components/Product/Product'
 import { Status } from 'constants/order'
 import { IUser, Order, Product as ProductModel, initialOrder, initialUser } from 'models'
@@ -9,6 +10,7 @@ import { getProducts } from 'services/Product'
 
 const ProductsComponent = () => {
   const [products, setProducts] = useState<ProductModel[]>([])
+  const [orderedProducts, setOrderedProduct] = useState<ProductModel[]>([])
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [page, setPage] = useState<number>(0)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -41,6 +43,10 @@ const ProductsComponent = () => {
     updatedOrder.products.push({ productId: product.id, numberOfProducts: value })
 
     setOrder(updatedOrder)
+
+    const orderedProductsNew = orderedProducts
+    orderedProductsNew.push(product)
+    setOrderedProduct(orderedProductsNew)
   }
 
   const handleOrder = () => {
@@ -52,6 +58,7 @@ const ProductsComponent = () => {
     })
       .then(() => {
         setOrder(initialOrder)
+        setOrderedProduct([])
       })
       .catch((err) => console.log(err))
   }
@@ -81,6 +88,7 @@ const ProductsComponent = () => {
         color='primary'
         size='large'
       />
+      <CreateOrder />
       <Button onClick={handleOrder}>Make an order</Button>
     </>
   )
