@@ -10,9 +10,9 @@ import { getProducts, getSimilarProductsByImage } from 'services/Product'
 
 const ProductsComponent = () => {
   const [products, setProducts] = useState<ProductModel[]>([])
-  const [orderedProducts, setOrderedProduct] = useState<{ product: ProductModel; value: number }[]>(
-    [],
-  )
+  const [orderedProducts, setOrderedProduct] = useState<
+    { product: ProductModel; numberOfProducts: number }[]
+  >([])
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [page, setPage] = useState<number>(0)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -36,21 +36,21 @@ const ProductsComponent = () => {
     })
   }, [])
 
-  const handleProductOrder = (product: ProductModel, value: number) => {
+  const handleProductOrder = (product: ProductModel, numberOfProducts: number) => {
     const updatedOrder: Order = {
       id: '',
       owner: user.id,
       status: Status.UNPAID,
-      orderPrice: order.orderPrice + product.price * value,
+      orderPrice: order.orderPrice + product.price * numberOfProducts,
       products: order.products,
     }
 
-    updatedOrder.products.push({ productId: product.id, numberOfProducts: value })
+    updatedOrder.products.push({ productId: product.id, numberOfProducts })
 
     setOrder(updatedOrder)
 
     const orderedProductsNew = orderedProducts
-    orderedProductsNew.push({ product, value })
+    orderedProductsNew.push({ product, numberOfProducts })
     setOrderedProduct(orderedProductsNew)
   }
 
@@ -157,7 +157,7 @@ const ProductsComponent = () => {
         color='primary'
         size='large'
       />
-      <CreateOrder />
+      <CreateOrder orderedProducts={orderedProducts} />
       <Button onClick={handleOrder}>Make an order</Button>
     </>
   )

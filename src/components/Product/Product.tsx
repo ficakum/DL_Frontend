@@ -4,19 +4,19 @@ import { FC, useRef } from 'react'
 
 interface IProductProps {
   product: ProductModel
-  handleProductOrder: (product: ProductModel, value: number) => void
+  handleProductOrder: (product: ProductModel, numberOfProducts: number) => void
 }
 
 const Product: FC<IProductProps> = ({ product, handleProductOrder }) => {
   const inputRef = useRef<HTMLInputElement>()
 
   const handleOrderProductClick = () => {
-    let value = 1
+    let numberOfProducts = 1
     if (inputRef.current) {
-      value = Number(inputRef.current.value)
+      numberOfProducts = Number(inputRef.current.value)
     }
 
-    handleProductOrder(product, value)
+    handleProductOrder(product, numberOfProducts)
   }
 
   return (
