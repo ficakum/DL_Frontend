@@ -7,7 +7,7 @@ export const ROUTES = {
   ORDER: {
     KEY: 'order-route',
     TITLE: 'Orders',
-    PATH: 'orders',
+    PATH: '/orders',
   },
   PRODUCT: {
     KEY: 'product-route',

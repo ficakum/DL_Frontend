@@ -13,13 +13,10 @@ const ProductsComponent = () => {
   const [orderedProducts, setOrderedProduct] = useState<
     { product: ProductModel; numberOfProducts: number }[]
   >([])
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [page, setPage] = useState<number>(0)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [totalPages, setTotalPages] = useState<number>(0)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [totalCount, setTotalCount] = useState<number>(0)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [user, setUser] = useState<IUser>(initialUser)
   const [order, setOrder] = useState<Order>(initialOrder)
   const [selectedImage, setSelectedImage] = useState<File | null>(null)
