@@ -10,7 +10,7 @@ const Auth = () => {
 
   return (
     <div className='auth-main'>
-      <Header showMenu='false' group='' />
+      <Header showMenu='false' />
       <div className='auth'>
         {haveAccount ? <SignIn /> : <SignUp />}
         <Button className='btn-have-acc' onClick={() => setHaveAccount(!haveAccount)}>

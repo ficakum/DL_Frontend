@@ -5,6 +5,7 @@ import {
   DELETE_PRODUCTS_URL,
   GET_PRODUCTS_BY_IDS_URL,
   GET_PRODUCTS_URL,
+  GET_SIMILAR_IMAGE_PRODUCTS_URL,
   UPDATE_PRODUCTS_URL,
 } from '../constants/product'
 import { ItemsPage, Product } from '../models'
@@ -17,7 +18,7 @@ const getProductsByIdsUrl = `${apiUrl}${GET_PRODUCTS_BY_IDS_URL}`
 const createProductUrl = `${apiUrl}${CREATE_PRODUCTS_URL}`
 const updateProductUrl = `${apiUrl}${UPDATE_PRODUCTS_URL}`
 const deleteProductUrl = `${apiUrl}${DELETE_PRODUCTS_URL}`
-const getSimilarImageProductsUrl = `${apiUrl}${GET_PRODUCTS_URL}`
+const getSimilarImageProductsUrl = `${apiUrl}${GET_SIMILAR_IMAGE_PRODUCTS_URL}`
 
 export const getProduct = (id: string): Promise<Product> => {
   return Api.get(`${getProductUrl}${id}`).then((response: AxiosResponse<Product>) => response.data)
@@ -66,7 +67,7 @@ export const deleteProduct = (id: string): void => {
 }
 
 export const getSimilarProductsByImage = (formData: FormData): Promise<Product[]> => {
-  return Api.post(`${getSimilarImageProductsUrl}}`, formData, {
+  return Api.post(`${getSimilarImageProductsUrl}`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },

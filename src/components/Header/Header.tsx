@@ -17,10 +17,9 @@ import { ROUTES } from '../../constants/routes'
 
 interface IHeaderProps {
   showMenu: string
-  group: string
 }
 
-const Header: FC<IHeaderProps> = ({ showMenu, group }) => {
+const Header: FC<IHeaderProps> = ({ showMenu }) => {
   const navigate = useNavigate()
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null)
 
@@ -65,15 +64,6 @@ const Header: FC<IHeaderProps> = ({ showMenu, group }) => {
           >
             SELLERS
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {group.length > 0 ? (
-              <div style={{ textAlign: 'center', width: '84%' }}>
-                <label>{group}</label>
-              </div>
-            ) : (
-              <></>
-            )}
-          </Box>
           {showMenu === 'true' ? (
             <Box sx={{ flexGrow: 0 }}>
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
