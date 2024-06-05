@@ -1,10 +1,22 @@
-import AuthComponent from 'components/AuthComponent'
+import './Auth.scss'
+import { useState } from 'react'
+import SignIn from 'components/SignIn'
+import SignUp from 'components/SignUp'
+import { Button } from '@mui/material'
 
 const Auth = () => {
+  const [haveAccount, setHaveAccount] = useState<boolean>(true)
+
   return (
-    <>
-      <AuthComponent />
-    </>
+    <div className='auth-main'>
+      {/* <Header showMenu="false" group="" /> */}
+      <div className='auth'>
+        {haveAccount ? <SignIn /> : <SignUp />}
+        <Button className='btn-have-acc' onClick={() => setHaveAccount(!haveAccount)}>
+          {haveAccount ? "Don't have account? Sign up" : 'Already have account? Sign in'}
+        </Button>
+      </div>
+    </div>
   )
 }
 

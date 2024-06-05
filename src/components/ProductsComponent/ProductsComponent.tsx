@@ -134,7 +134,6 @@ const ProductsComponent = () => {
             variant='outlined'
             onChange={handleImageChange}
           />
-          <Input type='file' onChange={handleImageChange} />
           <Button type='submit'>Upload</Button>
         </form>
       </div>

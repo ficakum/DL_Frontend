@@ -1,102 +1,277 @@
-import React, { useState } from 'react';
-import { TextField, Button, Typography, Container, Box } from '@mui/material';
+import React, { ChangeEvent, useRef, useState } from 'react'
+import {
+  TextField,
+  Button,
+  Typography,
+  Container,
+  Box,
+  createTheme,
+  ThemeProvider,
+  CssBaseline,
+  Avatar,
+  Grid,
+  InputAdornment,
+  IconButton,
+} from '@mui/material'
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
+import { useNavigate } from 'react-router-dom'
+import { signUpUser } from 'services/Auth'
+import { Visibility, VisibilityOff } from '@mui/icons-material'
+import { ROUTES } from 'constants/routes'
 
-function SignUp() {
-    // State for storing form data and errors
-    const [email, setEmail] = useState('');
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [errors, setErrors] = useState({ email:'', username: '', password: '' });
+const theme = createTheme({
+  palette: {
+    text: {
+      primary: '#FFFFFF',
+      secondary: '#FFFFFF',
+    },
+    primary: {
+      main: '#FFFFFF',
+    },
+  },
+})
 
-    // Function to handle form submission
-    const handleSubmit = () => {
-        const newErrors = validateForm();
-        
-        if (Object.keys(newErrors).length === 0) {
-            // Handle user registration here (e.g., send data to a server)
-            alert('Registration successful!');
-            // Reset form or redirect user after registration
+const SignUp = () => {
+  const navigate = useNavigate()
+  const usernameInputRef = useRef<HTMLInputElement | null>(null)
+  const emailInputRef = useRef<HTMLInputElement | null>(null)
+  const passwordInputRef = useRef<HTMLInputElement | null>(null)
+  const repeatPasswordInputRef = useRef<HTMLInputElement | null>(null)
+  const [isUsernameInvalid, setIsUsernameInvalid] = useState<boolean>(false)
+  const [isEmailInvalid, setIsEmailInvalid] = useState<boolean>(false)
+  const [isPasswordInvalid, setIsPasswordInvalid] = useState<boolean>(false)
+  const [isRepeatPasswordInvalid, setIsRepeatPasswordInvalid] = useState<boolean>(false)
+  const [username, setUsername] = useState<string>('')
+  const [email, setEmail] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
+  const [repeatPassword, setRepeatPassword] = useState<string>('')
+  const [showPassword, setShowPassword] = useState(false)
+  const [showRepeatPassword, setShowRepeatPassword] = useState(false)
+
+  const validateUsername = (username: string) => {
+    const regex = /^[a-zA-Z0-9_-]+$/
+    const isValidUsername = regex.test(username)
+    setIsUsernameInvalid(!isValidUsername)
+
+    return !isValidUsername
+  }
+
+  const validateEmail = (email: string) => {
+    const regex = /^[^@]+@[^@]+\.[^@]+$/
+    const isValidEmail = regex.test(email)
+    setIsEmailInvalid(!isValidEmail)
+
+    return !isValidEmail
+  }
+
+  const validatePassword = (password: string) => {
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/
+    const isValidPassword = regex.test(password)
+    setIsPasswordInvalid(!isValidPassword)
+
+    return !isValidPassword
+  }
+
+  const validateRepeatPassword = (password: string) => {
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/
+    const isValidPassword = regex.test(password)
+    setIsRepeatPasswordInvalid(!isValidPassword)
+
+    return !isValidPassword
+  }
+
+  const handleTogglePasswordVisibility = () => {
+    setShowPassword(!showPassword)
+  }
+
+  const handleToggleRepeatPasswordVisibility = () => {
+    setShowRepeatPassword(!showRepeatPassword)
+  }
+
+  const handleUsernameChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const newUsername = event.target.value
+    setUsername(newUsername)
+  }
+
+  const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const newEmail = event.target.value
+    setEmail(newEmail)
+  }
+
+  const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const newPassword = event.target.value
+    setPassword(newPassword)
+  }
+
+  const handleRepeatPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const newRepeatPassword = event.target.value
+    setRepeatPassword(newRepeatPassword)
+  }
+
+  const onSignUp = () => {
+    let err = validateUsername(username)
+    err = validateEmail(email) || err
+    err = validatePassword(password) || err
+    err = validateRepeatPassword(repeatPassword) || err
+
+    if (!username || !email || !password || !repeatPassword || err) {
+      return
+    }
+
+    if (password !== repeatPassword) {
+      setIsRepeatPasswordInvalid(true)
+      return
+    }
+
+    signUpUser(username, password, email)
+      .then(() => navigate(ROUTES.PRODUCT.PATH))
+      .catch((error) => {
+        if (error.response.status === 400) {
+          setIsUsernameInvalid(true)
+          setIsEmailInvalid(true)
         } else {
-            setErrors(newErrors);
+          console.log(error)
         }
-    };
+      })
+  }
 
-    // Basic validation function
-    const validateForm = () => {
-        const errs = { email:'', username: '', password: '' };
-        if (!username.trim()) errs.username = 'Username is required';
-        if (!email.trim()) errs.email = 'Email is required';
-        if (!password) errs.password = 'Password is required';
-        return errs;
-    };
-
-    return (
-        <Container component="main" maxWidth="xs">
-            <Box
-                sx={{
-                    marginTop: 8,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                }}
+  return (
+    <ThemeProvider theme={theme}>
+      <Container component='main' maxWidth='xs'>
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component='h1' variant='h5'>
+            Sign up
+          </Typography>
+          <Box component='form' noValidate sx={{ mt: 3 }}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  sx={{ backgroundColor: 'rgba(93, 26, 155, 0.93)' }}
+                  autoComplete='given-name'
+                  name='firstName'
+                  id='firstName'
+                  label='Username'
+                  required
+                  fullWidth
+                  autoFocus
+                  className='signup-username'
+                  ref={usernameInputRef}
+                  type='text'
+                  placeholder='Enter username'
+                  error={isUsernameInvalid}
+                  onChange={handleUsernameChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  sx={{ backgroundColor: 'rgba(93, 26, 155, 0.93)' }}
+                  required
+                  fullWidth
+                  id='email'
+                  label='Email Address'
+                  name='email'
+                  autoComplete='email'
+                  className='signup-email'
+                  ref={emailInputRef}
+                  type='text'
+                  placeholder='Enter email'
+                  error={isEmailInvalid}
+                  onChange={handleEmailChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  sx={{ backgroundColor: 'rgba(93, 26, 155, 0.93)' }}
+                  required
+                  fullWidth
+                  name='password'
+                  label='Password'
+                  id='password'
+                  autoComplete='new-password'
+                  className='signup-password'
+                  ref={passwordInputRef}
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder='Enter password'
+                  error={isPasswordInvalid}
+                  onChange={handlePasswordChange}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position='end'>
+                        <IconButton
+                          sx={{ color: 'white' }}
+                          onClick={handleTogglePasswordVisibility}
+                          edge='end'
+                        >
+                          {showPassword ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  sx={{ backgroundColor: 'rgba(93, 26, 155, 0.93)' }}
+                  required
+                  fullWidth
+                  name='password'
+                  label='Repeat password'
+                  id='repeat-password'
+                  className='signup-password'
+                  ref={repeatPasswordInputRef}
+                  type={showRepeatPassword ? 'text' : 'password'}
+                  placeholder='Repeat password'
+                  error={isRepeatPasswordInvalid}
+                  onChange={handleRepeatPasswordChange}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position='end'>
+                        <IconButton
+                          sx={{ color: 'white' }}
+                          onClick={handleToggleRepeatPasswordVisibility}
+                          edge='end'
+                        >
+                          {showRepeatPassword ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </Grid>
+            </Grid>
+            <Button
+              fullWidth
+              variant='contained'
+              sx={{
+                mt: 3,
+                mb: 2,
+                backgroundColor: 'rgba(144, 12, 63, 0.85)',
+                color: 'white',
+                ':hover': {
+                  bgcolor: 'rgb(144, 12, 63)',
+                },
+              }}
+              onClick={() => onSignUp()}
             >
-                <Typography component="h1" variant="h5">
-                    Sign Up
-                </Typography>
-                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="email"
-                        label="Email"
-                        name="email"
-                        autoComplete="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        error={!!errors.email}
-                        helperText={errors.email}
-                    />
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="username"
-                        label="Username"
-                        name="username"
-                        autoComplete="username"
-                        autoFocus
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        error={!!errors.username}
-                        helperText={errors.username}
-                    />
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="password"
-                        label="Password"
-                        type="password"
-                        id="password"
-                        autoComplete="new-password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        error={!!errors.password}
-                        helperText={errors.password}
-                    />
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                    >
-                        Sign Up
-                    </Button>
-                </Box>
-            </Box>
-        </Container>
-    );
+              Sign Up
+            </Button>
+            <Grid container justifyContent='flex-end'></Grid>
+          </Box>
+        </Box>
+      </Container>
+    </ThemeProvider>
+  )
 }
 
-export default SignUp;
+export default SignUp
