@@ -11,11 +11,11 @@ import {
   Typography,
   createTheme,
 } from '@mui/material'
-import { ROUTES } from 'constants/routes'
+import { ROUTES } from '../../constants/routes'
 import { ChangeEvent, FC, HTMLAttributes, useRef, useState } from 'react'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import { useNavigate } from 'react-router-dom'
-import { signInUser } from 'services/Auth'
+import { signInUser } from '../../services/Auth'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import cx from 'classnames'
 

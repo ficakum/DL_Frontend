@@ -1,6 +1,6 @@
-import { GlobalContextType, initialUser, IProps, IUser } from 'models'
+import { GlobalContextType, initialUser, IProps, IUser } from '../models'
 import { createContext, FC } from 'react'
-import { useLocalStorage } from 'hooks/useLocalStorage'
+import { useLocalStorage } from '../hooks/useLocalStorage'
 
 export const GlobalContext = createContext<GlobalContextType | null>(null)
 

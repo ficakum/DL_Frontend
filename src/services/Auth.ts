@@ -7,9 +7,9 @@ import {
   HEADERS_CONTENT_TYPE_FORM_URLENCODED,
   GET_USERS_API_URL,
   REFRESH_TOKEN_API_URL,
-} from 'constants/auth'
-import { Api } from 'api'
-import { IAuthUser, IUser, Roles } from 'models'
+} from '../constants/auth'
+import { Api } from '../api'
+import { IAuthUser, IUser, Roles } from '../models'
 
 const apiUrl = process.env.REACT_APP_API_URL
 const refreshUserAccessTokenUrl = `${apiUrl}${REFRESH_TOKEN_API_URL}`
@@ -20,7 +20,7 @@ const getLoggedInUserUrl = GET_USERS_API_URL
 const signinUserUrl = `${apiUrl}v1/authentication/signin`
 const signupUserUrl = `${apiUrl}v1/authentication/signup`
 
-export const refreshUserAccessToken = () => {
+export const refreshUserAccessToken = (): Promise<IAuthUser> => {
   const refreshToken = getCookie(REFRESH_TOKEN_KEY) as string
 
   const params = new URLSearchParams()
@@ -42,18 +42,18 @@ export const refreshUserAccessToken = () => {
   })
 }
 
-export const clearSession = () => {
+export const clearSession = (): void => {
   removeCookie(ACCESS_USER_TOKEN_KEY)
   removeCookie(REFRESH_TOKEN_KEY)
 }
 
-export const getLoggedInUser = () => {
+export const getLoggedInUser = (): Promise<IUser> => {
   return Api.get(getLoggedInUserUrl).then((response: AxiosResponse<IUser>) => {
     return response.data
   })
 }
 
-export const signInUser = async (username: string, password: string) => {
+export const signInUser = async (username: string, password: string): Promise<void> => {
   const postData = {
     userName: username,
     password,
@@ -71,7 +71,11 @@ export const signInUser = async (username: string, password: string) => {
   setCookie(REFRESH_TOKEN_KEY, newRefreshToken)
 }
 
-export const signUpUser = async (username: string, password: string, email: string) => {
+export const signUpUser = async (
+  username: string,
+  password: string,
+  email: string,
+): Promise<IAuthUser> => {
   const postData = {
     userName: username,
     password,
@@ -79,7 +83,7 @@ export const signUpUser = async (username: string, password: string, email: stri
     userType: Roles.CUSTOMER,
   }
 
-  const response = await Api.post(signupUserUrl, postData, {
+  const response: AxiosResponse<IAuthUser> = await Api.post(signupUserUrl, postData, {
     headers: {
       'Content-type': headersContentTypeFormUrlencoded,
     },
@@ -90,5 +94,5 @@ export const signUpUser = async (username: string, password: string, email: stri
   setCookie(ACCESS_USER_TOKEN_KEY, newAccessUserToken)
   setCookie(REFRESH_TOKEN_KEY, newRefreshToken)
 
-  return await response.data
+  return response.data
 }

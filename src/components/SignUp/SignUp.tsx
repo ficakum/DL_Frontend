@@ -15,9 +15,9 @@ import {
 } from '@mui/material'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import { useNavigate } from 'react-router-dom'
-import { signUpUser } from 'services/Auth'
+import { signUpUser } from '../../services/Auth'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
-import { ROUTES } from 'constants/routes'
+import { ROUTES } from '../../constants/routes'
 
 const theme = createTheme({
   palette: {

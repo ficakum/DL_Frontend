@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "typeRoots": ["src/@types", "node_modules/@types"],
     "lib": [
       "dom",
       "dom.iterable",
@@ -19,8 +18,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
-    "baseUrl": "src"
+    "jsx": "react-jsx"
   },
   "include": [
     "src"

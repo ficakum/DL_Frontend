@@ -1,10 +1,10 @@
 import './App.css'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 
-import { ROUTES } from 'constants/routes'
-import Auth from 'pages/Auth'
-import Orders from 'pages/Orders'
-import Products from 'pages/Products'
+import { ROUTES } from './constants/routes'
+import Auth from './pages/Auth'
+import Orders from './pages/Orders'
+import Products from './pages/Products'
 
 function App() {
   return (

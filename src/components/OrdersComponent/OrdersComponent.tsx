@@ -1,9 +1,9 @@
 import { Pagination } from '@mui/material'
-import Order from 'components/Order/Order'
-import { IUser, Order as OrderModel, Roles, initialUser } from 'models'
+import Order from '../../components/Order/Order'
+import { IUser, Order as OrderModel, Roles, initialUser } from '../../models'
 import { ChangeEvent, useEffect, useState } from 'react'
-import { getLoggedInUser } from 'services/Auth'
-import { getOrders } from 'services/Order'
+import { getLoggedInUser } from '../../services/Auth'
+import { getOrders } from '../../services/Order'
 
 const OrdersComponent = () => {
   const [orders, setOrders] = useState<OrderModel[]>([])

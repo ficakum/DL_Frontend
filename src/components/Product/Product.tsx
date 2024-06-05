@@ -1,5 +1,5 @@
 import { Button, Input } from '@mui/material'
-import { Product as ProductModel } from 'models'
+import { Product as ProductModel } from '../../models'
 import { FC, useRef } from 'react'
 
 interface IProductProps {

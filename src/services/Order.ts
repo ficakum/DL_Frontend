@@ -1,4 +1,4 @@
-import { Api } from 'api'
+import { Api } from '../api'
 import { AxiosResponse } from 'axios'
 import {
   CREATE_ORDER_URL,
@@ -6,8 +6,8 @@ import {
   GET_ORDERS_URL,
   GET_ORDER_URL,
   UPDATE_ORDER_URL,
-} from 'constants/order'
-import { ItemsPage, Order } from 'models'
+} from '../constants/order'
+import { ItemsPage, Order } from '../models'
 
 const apiUrl = process.env.REACT_APP_API_URL
 
@@ -17,13 +17,17 @@ const createOrderRecommendationUrl = `${apiUrl}${CREATE_ORDER_URL}`
 const updateOrderRecommendationUrl = `${apiUrl}${UPDATE_ORDER_URL}`
 const deleteOrderRecommendationUrl = `${apiUrl}${DELETE_ORDER_URL}`
 
-export const getOrder = (id: string) => {
+export const getOrder = (id: string): Promise<Order> => {
   return Api.get(`${getOrderRecommendationUrl}${id}`).then(
     (response: AxiosResponse<Order>) => response.data,
   )
 }
 
-export const getOrders = (page?: number, limit?: number, owner?: string) => {
+export const getOrders = (
+  page?: number,
+  limit?: number,
+  owner?: string,
+): Promise<ItemsPage<Order>> => {
   let ownerQuery
   let pageQuery
   let limitQuery
@@ -36,18 +40,18 @@ export const getOrders = (page?: number, limit?: number, owner?: string) => {
   )
 }
 
-export const createOrder = (order: Partial<Order>) => {
+export const createOrder = (order: Partial<Order>): Promise<Order> => {
   return Api.post(`${createOrderRecommendationUrl}`, order).then(
     (response: AxiosResponse<Order>) => response.data,
   )
 }
 
-export const updateOrder = (order: Partial<Order>, id: string) => {
+export const updateOrder = (order: Partial<Order>, id: string): Promise<Order> => {
   return Api.patch(`${updateOrderRecommendationUrl}${id}`, order).then(
     (response: AxiosResponse<Order>) => response.data,
   )
 }
 
-export const deleteOrder = (id: string) => {
+export const deleteOrder = (id: string): void => {
   Api.delete(`${deleteOrderRecommendationUrl}${id}`)
 }

@@ -1,4 +1,4 @@
-import { Api } from 'api'
+import { Api } from '../api'
 import { AxiosResponse } from 'axios'
 import {
   CREATE_USER_URL,
@@ -6,8 +6,8 @@ import {
   GET_USERS_URL,
   GET_USER_URL,
   UPDATE_USER_URL,
-} from 'constants/user'
-import { IUser, ItemsPage } from 'models'
+} from '../constants/user'
+import { IUser, ItemsPage } from '../models'
 
 const apiUrl = process.env.REACT_APP_API_URL
 

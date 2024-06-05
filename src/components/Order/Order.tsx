@@ -1,6 +1,6 @@
-import { IUser, Order as OrderModel, Product, Roles } from 'models'
+import { IUser, Order as OrderModel, Product, Roles } from '../../models'
 import { FC, useEffect, useState } from 'react'
-import { getProductsByIds } from 'services/Product'
+import { getProductsByIds } from '../../services/Product'
 
 interface IOrderProps {
   order: OrderModel

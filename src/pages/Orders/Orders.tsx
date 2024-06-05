@@ -1,4 +1,4 @@
-import OrdersComponent from 'components/OrdersComponent'
+import OrdersComponent from '../../components/OrdersComponent'
 
 const Orders = () => {
   return (

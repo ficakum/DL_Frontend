@@ -1,12 +1,12 @@
 import { Button, Input, Pagination, TextField } from '@mui/material'
-import CreateOrder from 'components/CreateOrder'
-import Product from 'components/Product/Product'
-import { Status } from 'constants/order'
-import { IUser, Order, Product as ProductModel, initialOrder, initialUser } from 'models'
+import CreateOrder from '../../components/CreateOrder'
+import Product from '../../components/Product/Product'
+import { Status } from '../../constants/order'
+import { IUser, Order, Product as ProductModel, initialOrder, initialUser } from '../../models'
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react'
-import { getLoggedInUser } from 'services/Auth'
-import { createOrder } from 'services/Order'
-import { getProducts, getSimilarProductsByImage } from 'services/Product'
+import { getLoggedInUser } from '../../services/Auth'
+import { createOrder } from '../../services/Order'
+import { getProducts, getSimilarProductsByImage } from '../../services/Product'
 
 const ProductsComponent = () => {
   const [products, setProducts] = useState<ProductModel[]>([])

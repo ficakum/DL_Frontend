@@ -1,4 +1,4 @@
-import { Api } from 'api'
+import { Api } from '../api'
 import { AxiosResponse } from 'axios'
 import {
   CREATE_PRODUCTS_URL,
@@ -6,8 +6,8 @@ import {
   GET_PRODUCTS_BY_IDS_URL,
   GET_PRODUCTS_URL,
   UPDATE_PRODUCTS_URL,
-} from 'constants/product'
-import { ItemsPage, Product } from 'models'
+} from '../constants/product'
+import { ItemsPage, Product } from '../models'
 
 const apiUrl = process.env.REACT_APP_API_URL
 
@@ -19,11 +19,16 @@ const updateProductUrl = `${apiUrl}${UPDATE_PRODUCTS_URL}`
 const deleteProductUrl = `${apiUrl}${DELETE_PRODUCTS_URL}`
 const getSimilarImageProductsUrl = `${apiUrl}${GET_PRODUCTS_URL}`
 
-export const getProduct = (id: string) => {
+export const getProduct = (id: string): Promise<Product> => {
   return Api.get(`${getProductUrl}${id}`).then((response: AxiosResponse<Product>) => response.data)
 }
 
-export const getProducts = (page?: number, limit?: number, name?: string, type?: string) => {
+export const getProducts = (
+  page?: number,
+  limit?: number,
+  name?: string,
+  type?: string,
+): Promise<ItemsPage<Product>> => {
   let typeQuery
   let nameQuery
   let pageQuery
@@ -38,29 +43,29 @@ export const getProducts = (page?: number, limit?: number, name?: string, type?:
   )
 }
 
-export const getProductsByIds = (ids: string[]) => {
+export const getProductsByIds = (ids: string[]): Promise<Product[]> => {
   return Api.post(`${getProductsByIdsUrl}`, { ids }).then(
     (response: AxiosResponse<Product[]>) => response.data,
   )
 }
 
-export const createProduct = (product: Partial<Product>) => {
+export const createProduct = (product: Partial<Product>): Promise<Product> => {
   return Api.post(`${createProductUrl}`, product).then(
     (response: AxiosResponse<Product>) => response.data,
   )
 }
 
-export const updateProduct = (product: Partial<Product>, id: string) => {
+export const updateProduct = (product: Partial<Product>, id: string): Promise<Product> => {
   return Api.patch(`${updateProductUrl}${id}`, product).then(
     (response: AxiosResponse<Product>) => response.data,
   )
 }
 
-export const deleteProduct = async (id: string) => {
+export const deleteProduct = (id: string): void => {
   Api.delete(`${deleteProductUrl}${id}`)
 }
 
-export const getSimilarProductsByImage = (formData: FormData) => {
+export const getSimilarProductsByImage = (formData: FormData): Promise<Product[]> => {
   return Api.post(`${getSimilarImageProductsUrl}}`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',

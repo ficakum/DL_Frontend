@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
-import { APP_PREFIX } from 'constants/general'
+import { APP_PREFIX } from '../constants/general'
 
 export const useLocalStorage = <T>(
   storageKey: string,

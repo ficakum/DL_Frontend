@@ -1,4 +1,4 @@
-import { Product as ProductModel } from 'models'
+import { Product as ProductModel } from '../../models'
 import { FC } from 'react'
 
 interface ICreateOrderProps {
