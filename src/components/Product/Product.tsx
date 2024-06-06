@@ -1,4 +1,4 @@
-import { Button, Input } from '@mui/material'
+import { Button, TextField } from '@mui/material'
 import { Product as ProductModel } from '../../models'
 import { FC, useRef } from 'react'
 
@@ -13,8 +13,10 @@ const Product: FC<IProductProps> = ({ product, handleProductOrder }) => {
   const handleOrderProductClick = () => {
     let numberOfProducts = 1
     if (inputRef.current) {
+      console.log(inputRef.current)
       numberOfProducts = Number(inputRef.current.value)
     }
+    console.log(numberOfProducts)
 
     handleProductOrder(product, numberOfProducts)
   }
@@ -40,9 +42,18 @@ const Product: FC<IProductProps> = ({ product, handleProductOrder }) => {
         </div>
         <div>
           <img src={product.imageURL} />
+          <iframe
+            src={product.imageURL}
+            width='640'
+            height='360'
+            frameBorder='0'
+            scrolling='no'
+            allowFullScreen
+            title='Bycicle 1'
+          ></iframe>
         </div>
       </div>
-      <Input ref={inputRef} type='number' />
+      <TextField inputRef={inputRef} type='number' />
       <Button onClick={handleOrderProductClick}>Add product to order</Button>
     </div>
   )

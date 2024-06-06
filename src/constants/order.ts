@@ -5,6 +5,6 @@ export const UPDATE_ORDER_URL = 'v1/orders/'
 export const DELETE_ORDER_URL = 'v1/orders/'
 
 export enum Status {
-  PAID = 'paid',
-  UNPAID = 'unpaid',
+  PAID = 'Paid',
+  UNPAID = 'Unpaid',
 }

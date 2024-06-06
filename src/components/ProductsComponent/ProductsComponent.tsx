@@ -1,4 +1,4 @@
-import { Button, Input, Pagination, TextField } from '@mui/material'
+import { Button, Pagination, TextField } from '@mui/material'
 import CreateOrder from '../../components/CreateOrder'
 import Product from '../../components/Product/Product'
 import { Status } from '../../constants/order'
@@ -34,16 +34,19 @@ const ProductsComponent = () => {
   }, [])
 
   const handleProductOrder = (product: ProductModel, numberOfProducts: number) => {
+    console.log(numberOfProducts)
     const updatedOrder: Order = {
-      id: '',
-      owner: user.id,
+      _id: '',
+      owner: user._id,
       status: Status.UNPAID,
       orderPrice: order.orderPrice + product.price * numberOfProducts,
       products: order.products,
     }
 
-    updatedOrder.products.push({ productId: product.id, numberOfProducts })
+    updatedOrder.products.push({ productId: product._id, numberOfProducts })
 
+    console.log(user)
+    console.log(updatedOrder)
     setOrder(updatedOrder)
 
     const orderedProductsNew = orderedProducts
@@ -56,7 +59,7 @@ const ProductsComponent = () => {
       orderPrice: order.orderPrice,
       owner: order.owner,
       products: order.products,
-      status: order.status,
+      status: Status.UNPAID,
     })
       .then(() => {
         setOrder(initialOrder)
@@ -136,15 +139,15 @@ const ProductsComponent = () => {
       </div>
       <div>
         <h2>Search products by name</h2>
-        <Input placeholder='Enter name of the product' ref={nameInputRef} />
+        <TextField placeholder='Enter name of the product' inputRef={nameInputRef} />
       </div>
       <div>
         <h2>Search products by type</h2>
-        <Input placeholder='Enter type of the product' ref={typeInputRef} />
+        <TextField placeholder='Enter type of the product' inputRef={typeInputRef} />
       </div>
       <Button onClick={onFilterProducts}>Filter products</Button>
       {products.map((product) => (
-        <Product key={product.id} product={product} handleProductOrder={handleProductOrder} />
+        <Product key={product._id} product={product} handleProductOrder={handleProductOrder} />
       ))}
       <Pagination
         count={totalPages}

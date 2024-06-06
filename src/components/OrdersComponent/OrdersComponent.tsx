@@ -22,7 +22,7 @@ const OrdersComponent = () => {
           setTotalPages(response.totalPages)
           setTotalCount(response.totalCount)
         })
-      : getOrders(1, 10, user.id).then((response) => {
+      : getOrders(1, 10, user._id).then((response) => {
           setOrders(response.items)
           setPage(response.currentPage)
           setTotalPages(response.totalPages)
@@ -42,7 +42,7 @@ const OrdersComponent = () => {
           .catch((error: unknown) => {
             console.log(error)
           })
-      : getOrders(value, 10, user.id)
+      : getOrders(value, 10, user._id)
           .then((response) => {
             setOrders(response.items)
             setPage(response.currentPage)
@@ -58,7 +58,7 @@ const OrdersComponent = () => {
     <>
       <div>
         {orders.map((order) => (
-          <Order key={order.id} order={order} user={user} />
+          <Order key={order._id} order={order} user={user} />
         ))}
       </div>
       <Pagination

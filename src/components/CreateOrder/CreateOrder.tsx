@@ -10,7 +10,7 @@ const CreateOrder: FC<ICreateOrderProps> = ({ orderedProducts }) => {
     <>
       {orderedProducts.map((orderedProduct) => {
         return (
-          <div key={`ordered-${orderedProduct.product.id}`}>
+          <div key={`ordered-${orderedProduct.product._id}`}>
             <div>
               <h2>Type of product ordered:</h2>
               <p>{orderedProduct.product.type}</p>

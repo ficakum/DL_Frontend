@@ -30,19 +30,19 @@ export type GlobalContextType = {
 export interface IUser {
   email: string
   userName: string
-  id: string
+  _id: string
   userType: Role
 }
 
 export const initialUser = {
   email: '',
   userName: '',
-  id: '',
+  _id: '',
   userType: Roles.CUSTOMER,
 }
 
 export interface Product {
-  id: string
+  _id: string
   type: string
   name: string
   imageURL: string
@@ -51,7 +51,7 @@ export interface Product {
 }
 
 export const initialProduct = {
-  id: '',
+  _id: '',
   type: '',
   name: '',
   imageURL: '',
@@ -65,7 +65,7 @@ interface OrderedProduct {
 }
 
 export interface Order {
-  id: string
+  _id: string
   products: OrderedProduct[]
   status: string
   owner: string
@@ -73,7 +73,7 @@ export interface Order {
 }
 
 export const initialOrder = {
-  id: '',
+  _id: '',
   products: [],
   status: '',
   owner: '',

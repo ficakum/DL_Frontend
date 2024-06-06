@@ -32,7 +32,7 @@ const Order: FC<IOrderProps> = ({ order, user }) => {
         </div>
       )}
       {products.map((product, productIndex) => (
-        <div key={product.id}>
+        <div key={product._id}>
           <div>
             <h1>Product type</h1>
             <p>{product.type}</p>
