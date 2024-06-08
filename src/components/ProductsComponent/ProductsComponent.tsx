@@ -7,6 +7,7 @@ import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react'
 import { getLoggedInUser } from '../../services/Auth'
 import { createOrder } from '../../services/Order'
 import { getProducts, getSimilarProductsByImage } from '../../services/Product'
+import './ProductsComponent.scss'
 
 const ProductsComponent = () => {
   const [products, setProducts] = useState<ProductModel[]>([])
@@ -124,28 +125,32 @@ const ProductsComponent = () => {
   }
 
   return (
-    <>
-      <div>
-        <h2>Search products similar to your image</h2>
-        <form onSubmit={handleSubmit}>
-          <TextField
-            type='file'
-            inputProps={{ accept: 'image/*' }}
-            variant='outlined'
-            onChange={handleImageChange}
-          />
-          <Button type='submit'>Upload</Button>
-        </form>
+    <div className='products'>
+      <div className='products-filters'>
+        <div>
+          <h2>Search products similar to your image</h2>
+          <form onSubmit={handleSubmit}>
+            <TextField
+              type='file'
+              inputProps={{ accept: 'image/*' }}
+              variant='outlined'
+              onChange={handleImageChange}
+            />
+            <Button type='submit'>Upload</Button>
+          </form>
+        </div>
+        <div className='products-filters-text'>
+          <div>
+            <h2>Search products by name</h2>
+            <TextField placeholder='Enter name of the product' inputRef={nameInputRef} />
+          </div>
+          <div>
+            <h2>Search products by type</h2>
+            <TextField placeholder='Enter type of the product' inputRef={typeInputRef} />
+          </div>
+          <Button onClick={onFilterProducts}>Filter products</Button>
+        </div>
       </div>
-      <div>
-        <h2>Search products by name</h2>
-        <TextField placeholder='Enter name of the product' inputRef={nameInputRef} />
-      </div>
-      <div>
-        <h2>Search products by type</h2>
-        <TextField placeholder='Enter type of the product' inputRef={typeInputRef} />
-      </div>
-      <Button onClick={onFilterProducts}>Filter products</Button>
       {products.map((product) => (
         <Product key={product._id} product={product} handleProductOrder={handleProductOrder} />
       ))}
@@ -158,7 +163,7 @@ const ProductsComponent = () => {
       />
       <CreateOrder orderedProducts={orderedProducts} />
       <Button onClick={handleOrder}>Make an order</Button>
-    </>
+    </div>
   )
 }
 

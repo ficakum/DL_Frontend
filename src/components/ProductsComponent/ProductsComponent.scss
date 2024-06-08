@@ -1,0 +1,27 @@
+.products {
+  color: black;
+
+  &-filters {
+    display: flex;
+    gap: 5%;
+    justify-content: center;
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &-text {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    &-text > * {
+      flex: 1 1 auto; /* Grow, shrink, and take initial width */
+    }
+
+    &-text > :nth-child(3) {
+      flex-basis: 100%; /* Force the third child to take full width */
+    }
+  }
+}
