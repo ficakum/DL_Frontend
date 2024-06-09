@@ -5,6 +5,7 @@ import {
   DELETE_ORDER_URL,
   GET_ORDERS_URL,
   GET_ORDER_URL,
+  Status,
   UPDATE_ORDER_URL,
 } from '../constants/order'
 import { ItemsPage, Order } from '../models'
@@ -35,9 +36,9 @@ export const getOrders = (
   page ? (pageQuery = `?$page=${page}`) : (pageQuery = '?page=1')
   limit ? (limitQuery = `&$limit=${limit}`) : (limitQuery = '&limit=0')
 
-  return Api.get(`${getOrdersRecommendationUrl}${pageQuery}${limitQuery}${ownerQuery}`).then(
-    (response: AxiosResponse<ItemsPage<Order>>) => response.data,
-  )
+  return Api.get(
+    `${getOrdersRecommendationUrl}${pageQuery}${limitQuery}${ownerQuery}&status=${Status.UNPAID}`,
+  ).then((response: AxiosResponse<ItemsPage<Order>>) => response.data)
 }
 
 export const createOrder = (order: Partial<Order>): Promise<Order> => {

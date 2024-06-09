@@ -1,0 +1,40 @@
+.product {
+  max-width: 570px;
+  width: 43%;
+  flex-basis: 45%;
+  border: 1px solid grey;
+  border-radius: 5px;
+  padding: 5px;
+  padding-bottom: 10px;
+
+  &-content {
+    margin-bottom: 10px;
+
+    &-info {
+      display: flex;
+      gap: 5px;
+      height: fit-content;
+      justify-content: center;
+
+      &-dynamic {
+        font-weight: 600;
+      }
+    }
+
+    p {
+      font-size: 18px;
+      margin: 5px 0;
+    }
+
+    &-image {
+      max-width: 200px;
+      max-height: 200px;
+      margin: 0 auto;
+    }
+  }
+
+  &-order {
+    display: flex;
+    justify-content: center;
+  }
+}

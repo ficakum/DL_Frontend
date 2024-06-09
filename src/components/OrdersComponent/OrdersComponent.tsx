@@ -1,9 +1,12 @@
-import { Pagination } from '@mui/material'
+import { Button, Pagination } from '@mui/material'
 import Order from '../../components/Order/Order'
 import { IUser, Order as OrderModel, Roles, initialUser } from '../../models'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { getLoggedInUser } from '../../services/Auth'
 import { getOrders } from '../../services/Order'
+
+import './OrdersComponent.scss'
+import { payOrder } from '../../services/Payment'
 
 const OrdersComponent = () => {
   const [orders, setOrders] = useState<OrderModel[]>([])
@@ -54,11 +57,26 @@ const OrdersComponent = () => {
           })
   }
 
+  const payOrderWithId = (orderId: string) => {
+    payOrder(orderId).then((order) => {
+      const newOrders = orders.filter((ord) => ord._id !== order._id)
+      setOrders(newOrders)
+    })
+  }
+
   return (
-    <>
+    <div className='orders'>
       <div>
-        {orders.map((order) => (
-          <Order key={order._id} order={order} user={user} />
+        {orders.map((order, index) => (
+          <>
+            {user.userType === Roles.ADMIN && (
+              <Button onClick={() => payOrderWithId(order._id)}>Pay order</Button>
+            )}
+            <p>
+              Order: <strong>{index + 1}</strong>
+            </p>
+            <Order key={order._id} order={order} user={user} />
+          </>
         ))}
       </div>
       <Pagination
@@ -68,7 +86,7 @@ const OrdersComponent = () => {
         color='primary'
         size='large'
       />
-    </>
+    </div>
   )
 }
 

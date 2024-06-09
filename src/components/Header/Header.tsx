@@ -42,9 +42,9 @@ const Header: FC<IHeaderProps> = ({ showMenu }) => {
   return (
     <AppBar position='static' sx={{ backgroundColor: 'rgba(27, 4, 110, 0.95)' }}>
       <Container maxWidth='xl'>
-        <Toolbar disableGutters>
+        <Toolbar disableGutters style={{ display: 'flex', justifyContent: 'space-around' }}>
           <a href='Home'>
-            <img src='logo.png' alt='AUDITORIUM logo' id='logo' />
+            <img src='Logo-with text.png' alt='AUDITORIUM logo' id='logo' />
           </a>
           <Typography
             variant='h5'

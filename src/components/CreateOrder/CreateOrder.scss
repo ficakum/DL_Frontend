@@ -1,0 +1,19 @@
+.create-order {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
+  row-gap: 15px;
+  margin-bottom: 20px;
+
+  &-item {
+    border: 1px solid grey;
+    border-radius: 5px;
+    padding: 10px;
+
+    &-content {
+      display: flex;
+      justify-content: space-around;
+    }
+  }
+}

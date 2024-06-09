@@ -1,6 +1,11 @@
 .products {
   color: black;
 
+  nav {
+    display: flex;
+    justify-content: center;
+  }
+
   &-filters {
     display: flex;
     gap: 5%;
@@ -9,11 +14,13 @@
     form {
       display: flex;
       flex-direction: column;
+      row-gap: 10px;
     }
 
     &-text {
       display: flex;
       flex-wrap: wrap;
+      row-gap: 10px;
     }
 
     &-text > * {
@@ -23,5 +30,13 @@
     &-text > :nth-child(3) {
       flex-basis: 100%; /* Force the third child to take full width */
     }
+  }
+
+  &-section {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100%;
+    justify-content: space-around;
+    row-gap: 15px;
   }
 }

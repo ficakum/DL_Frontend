@@ -2,6 +2,8 @@ import { IUser, Order as OrderModel, Product, Roles } from '../../models'
 import { FC, useEffect, useState } from 'react'
 import { getProductsByIds } from '../../services/Product'
 
+import './Order.scss'
+
 interface IOrderProps {
   order: OrderModel
   user: IUser
@@ -16,42 +18,61 @@ const Order: FC<IOrderProps> = ({ order, user }) => {
   }, [])
 
   return (
-    <>
-      <div>
-        <h1>Order price:</h1>
-        <p>{order.orderPrice}</p>
+    <div className='order'>
+      <div className='order-content'>
+        <p>Order price:</p>
+        <p>
+          <strong>{order.orderPrice}</strong>
+        </p>
       </div>
-      <div>
-        <h1>Order status:</h1>
-        <p>{order.status}</p>
+      <div className='order-content'>
+        <p>Order status:</p>
+        <p>
+          <strong>{order.status}</strong>
+        </p>
       </div>
       {user.userType === Roles.ADMIN && (
-        <div>
-          <h1>Owner</h1>
-          <p>{user.userName}</p>
+        <div className='order-content'>
+          <p>Owner</p>
+          <p>
+            <strong>{user.userName}</strong>
+          </p>
         </div>
       )}
-      {products.map((product, productIndex) => (
-        <div key={product._id}>
-          <div>
-            <h1>Product type</h1>
-            <p>{product.type}</p>
+      <div className='order-content'>
+        <p>Products:</p>
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+        {products.map((product, productIndex) => (
+          <div className='order-item' key={product._id}>
+            <div className='order-item-content'>
+              <p>Product type:</p>
+              <p>
+                <strong>{product.type}</strong>
+              </p>
+            </div>
+            <div className='order-item-content'>
+              <p>Product name:</p>
+              <p>
+                <strong>{product.name}</strong>
+              </p>
+            </div>
+            <div className='order-item-content'>
+              <p>Price of product:</p>
+              <p>
+                <strong>{product.price}</strong>
+              </p>
+            </div>
+            <div className='order-item-content'>
+              <p>Number of products ordered:</p>
+              <p>
+                <strong>{order.products[productIndex].numberOfProducts}</strong>
+              </p>
+            </div>
           </div>
-          <div>
-            <h1>Product name</h1>
-            <p>{product.name}</p>
-          </div>
-          <div>
-            <h2>Price of product:</h2>
-            <p>{product.price}</p>
-          </div>
-          <div>
-            <h2>Number of products ordered:</h2>
-            <p>{order.products[productIndex].numberOfProducts}</p>
-          </div>
-        </div>
-      ))}
-    </>
+        ))}
+      </div>
+    </div>
   )
 }
 

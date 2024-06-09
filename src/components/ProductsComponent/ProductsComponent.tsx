@@ -23,6 +23,16 @@ const ProductsComponent = () => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null)
   const nameInputRef = useRef<HTMLInputElement | null>(null)
   const typeInputRef = useRef<HTMLInputElement | null>(null)
+  const [totalPrice, setTotalPrice] = useState<number>(0)
+
+  useEffect(() => {
+    let price = 0
+    orderedProducts.map((product) => {
+      price += product.numberOfProducts * product.product.price
+    })
+
+    setTotalPrice(price)
+  }, [orderedProducts.length])
 
   useEffect(() => {
     getLoggedInUser().then((user) => setUser(user))
@@ -34,8 +44,11 @@ const ProductsComponent = () => {
     })
   }, [])
 
+  const cancelOrder = () => {
+    setOrderedProduct([])
+  }
+
   const handleProductOrder = (product: ProductModel, numberOfProducts: number) => {
-    console.log(numberOfProducts)
     const updatedOrder: Order = {
       _id: '',
       owner: user._id,
@@ -46,8 +59,6 @@ const ProductsComponent = () => {
 
     updatedOrder.products.push({ productId: product._id, numberOfProducts })
 
-    console.log(user)
-    console.log(updatedOrder)
     setOrder(updatedOrder)
 
     const orderedProductsNew = orderedProducts
@@ -151,9 +162,11 @@ const ProductsComponent = () => {
           <Button onClick={onFilterProducts}>Filter products</Button>
         </div>
       </div>
-      {products.map((product) => (
-        <Product key={product._id} product={product} handleProductOrder={handleProductOrder} />
-      ))}
+      <div className='products-section'>
+        {products.map((product) => (
+          <Product key={product._id} product={product} handleProductOrder={handleProductOrder} />
+        ))}
+      </div>
       <Pagination
         count={totalPages}
         page={page}
@@ -161,8 +174,9 @@ const ProductsComponent = () => {
         color='primary'
         size='large'
       />
-      <CreateOrder orderedProducts={orderedProducts} />
       <Button onClick={handleOrder}>Make an order</Button>
+      <Button onClick={cancelOrder}>Cancel an order</Button>
+      <CreateOrder orderedProducts={orderedProducts} totalPrice={totalPrice} />
     </div>
   )
 }

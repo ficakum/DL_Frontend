@@ -1,6 +1,7 @@
 import { Button, TextField } from '@mui/material'
 import { Product as ProductModel } from '../../models'
 import { FC, useRef } from 'react'
+import './Product.scss'
 
 interface IProductProps {
   product: ProductModel
@@ -22,39 +23,40 @@ const Product: FC<IProductProps> = ({ product, handleProductOrder }) => {
   }
 
   return (
-    <div>
-      <div>
-        <div>
-          <h2>Type of product:</h2>
-          <p>{product.type}</p>
-        </div>
-        <div>
-          <h2>Name of product:</h2>
-          <p>{product.name}</p>
-        </div>
-        <div>
-          <h2>Price of product:</h2>
-          <p>{product.price}</p>
-        </div>
-        <div>
-          <h2>Code of product:</h2>
-          <p>{product.code}</p>
-        </div>
-        <div>
-          <img src={product.imageURL} />
+    <div className='product'>
+      <div className='product-content'>
+        <div className='product-content-image'>
           <iframe
             src={product.imageURL}
-            width='640'
-            height='360'
+            width='200'
+            height='200'
             frameBorder='0'
             scrolling='no'
             allowFullScreen
             title='Bycicle 1'
           ></iframe>
         </div>
+        <div className='product-content-info'>
+          <p>Type of product:</p>
+          <p className='product-content-info-dynamic'>{product.type}</p>
+        </div>
+        <div className='product-content-info'>
+          <p>Name of product:</p>
+          <p className='product-content-info-dynamic'>{product.name}</p>
+        </div>
+        <div className='product-content-info'>
+          <p>Price of product:</p>
+          <p className='product-content-info-dynamic'>{product.price}</p>
+        </div>
+        <div className='product-content-info'>
+          <p>Code of product:</p>
+          <p className='product-content-info-dynamic'>{product.code}</p>
+        </div>
       </div>
-      <TextField inputRef={inputRef} type='number' />
-      <Button onClick={handleOrderProductClick}>Add product to order</Button>
+      <div className='product-order'>
+        <TextField inputRef={inputRef} type='number' />
+        <Button onClick={handleOrderProductClick}>Add product to order</Button>
+      </div>
     </div>
   )
 }
